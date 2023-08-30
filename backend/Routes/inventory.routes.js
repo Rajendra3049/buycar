@@ -118,9 +118,7 @@ inventoryRoutes.delete("/inventory", userAuth, async (req, res) => {
     }
 
     const deletedCars = await inventoryModel.deleteMany({ _id: { $in: ids } });
-    res
-      .status(200)
-      .send({ msg: `${deletedCars.deletedCount} cars deleted successfully` });
+    res.status(200).send({ msg: `cars deleted successfully` });
   } catch (error) {
     res
       .status(500)
