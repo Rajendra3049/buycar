@@ -53,6 +53,16 @@ const Navbar = () => {
               My Inventory
             </Link>
           ) : null}
+          {isAuth ? (
+            <Link
+              as={RouterLink}
+              to="/oem-details"
+              mr={4}
+              fontWeight="medium"
+              _hover={{ color: linkHoverColor }}>
+              OEM Details
+            </Link>
+          ) : null}
 
           {isAuth ? (
             <Link
