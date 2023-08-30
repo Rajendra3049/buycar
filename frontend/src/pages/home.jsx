@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInventory } from "../redux/inventory/inventory.action";
+import { VStack } from "@chakra-ui/react";
+import CarCard from "../components/carCard";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,9 +16,10 @@ const Home = () => {
   }, [dispatch]);
   return (
     <div>
-      {inventory.map((item) => (
-        <p key={item._id}>{item.title}</p>
-      ))}
+      <VStack spacing={4} p={4}>
+        {inventory.length &&
+          inventory.map((car) => <CarCard key={car._id} car={car} />)}
+      </VStack>
     </div>
   );
 };

@@ -49,7 +49,6 @@ const LoginPage = () => {
   }, [isAuth]);
 
   useEffect(() => {
-    console.log(error);
     if (error) {
       toast({
         title: "error",

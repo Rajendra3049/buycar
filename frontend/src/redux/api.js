@@ -1,1 +1,1 @@
-export const baseUrl = "https://buy-cars-wsqb.onrender.com";
+export const baseUrl = "http://localhost:8000";
