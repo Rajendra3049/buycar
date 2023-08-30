@@ -66,5 +66,6 @@ export const dealerSignup =
 
 export const dealerLogout = () => (dispatch) => {
   localStorage.removeItem("token");
+  localStorage.removeItem("dealerId");
   dispatch({ type: DEALER_LOGOUT });
 };

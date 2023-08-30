@@ -1,12 +1,17 @@
 import React from "react";
-import { Box, Flex, Image, Text, Badge, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Image,
+  Text,
+  Badge,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import BuyCarModal from "./buyCarModal";
 
 const CarCard = ({ car }) => {
-  const handleBuyClick = () => {
-    console.log(`Buying ${car.title}`);
-  };
-
   return (
     <Box
       borderWidth="1px"
@@ -35,9 +40,7 @@ const CarCard = ({ car }) => {
         </Badge>
       </Flex>
       <Text mt={2}>Accidents: {car.accidents}</Text>
-      <Button colorScheme="teal" mt={4} onClick={handleBuyClick}>
-        Buy
-      </Button>
+      <BuyCarModal />
     </Box>
   );
 };

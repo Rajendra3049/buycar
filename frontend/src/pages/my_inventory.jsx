@@ -55,14 +55,14 @@ const MyInventory = () => {
             onClick={openNewModal}>
             Add New Car
           </Button>
-          <Button
+          {/* <Button
             colorScheme="purple"
             variant="outline"
             size="lg"
             width="100%"
             _hover={{ color: "white", background: "purple.500" }}>
             My Buyers
-          </Button>
+          </Button> */}
         </VStack>
       </Box>
       <VStack spacing={4} p={4} width="100%">

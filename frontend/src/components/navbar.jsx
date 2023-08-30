@@ -64,7 +64,7 @@ const Navbar = () => {
             </Link>
           ) : null}
 
-          {isAuth ? (
+          {/* {isAuth ? (
             <Link
               as={RouterLink}
               to="/my-buyer"
@@ -74,7 +74,7 @@ const Navbar = () => {
               _hover={{ color: linkHoverColor }}>
               My Buyers
             </Link>
-          ) : null}
+          ) : null} */}
           <Link
             as={RouterLink}
             to="/login"
