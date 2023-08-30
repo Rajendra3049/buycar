@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyInventory } from "../redux/inventory/inventory.action";
 import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
 
 import InventoryCard from "../components/inventoryCard";
 import { useNavigate } from "react-router-dom";
+import AddCarModal from "../components/addNewCar";
 
 const MyInventory = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,14 @@ const MyInventory = () => {
 
     fetchData();
   }, [dispatch]);
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const openNewModal = () => {
+    setIsNewModalOpen(true);
+  };
+
+  const closeNewModal = () => {
+    setIsNewModalOpen(false);
+  };
 
   useEffect(() => {
     if (!isAuth) {
@@ -35,13 +44,15 @@ const MyInventory = () => {
         bg="white"
         boxShadow="md"
         zIndex="1">
+        <AddCarModal isOpen={isNewModalOpen} onClose={closeNewModal} />
         <VStack spacing={4} align="stretch">
           <Button
             colorScheme="blue"
             variant="outline"
             size="lg"
             width="100%"
-            _hover={{ color: "white", background: "blue.500" }}>
+            _hover={{ color: "white", background: "blue.500" }}
+            onClick={openNewModal}>
             Add New Car
           </Button>
           <Button

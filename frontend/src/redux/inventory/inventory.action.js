@@ -118,3 +118,29 @@ export const EditCar =
       dispatch({ type: INVENTORY_ERROR });
     }
   };
+
+export const addNewCar =
+  ({ newCarData, Inventory, myInventory }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: INVENTORY_LOADING });
+
+      const res = await fetch(`${baseUrl}/inventory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: JSON.parse(localStorage.getItem("token")),
+        },
+        body: JSON.stringify(newCarData),
+      });
+      const data = await res.json();
+      if (data.data) {
+        let updatedInventory = [...Inventory, data.data];
+        let updatedMyInventory = [...myInventory, data.data];
+        dispatch({ type: GET_INVENTORY, payload: updatedInventory });
+        dispatch({ type: GET_MY_INVENTORY, payload: updatedMyInventory });
+      }
+    } catch (error) {
+      dispatch({ type: INVENTORY_ERROR });
+    }
+  };

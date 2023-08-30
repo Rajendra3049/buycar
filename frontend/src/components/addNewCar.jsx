@@ -16,27 +16,35 @@ import {
   Switch,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditCar } from "../redux/inventory/inventory.action";
+import { addNewCar } from "../redux/inventory/inventory.action";
 
-const EditFormModal = ({ isOpen, onClose, carData }) => {
-  const { _id } = carData;
-  const [editedData, setEditedData] = useState(carData);
+const AddCarModal = ({ isOpen, onClose }) => {
+  const [newCarData, setNewCarData] = useState({
+    title: "",
+    accidents: "",
+    description: "",
+    image: "",
+    previous_buyers: "",
+    registration_place: "",
+    major_scratch: false,
+    original_paint: false,
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const newValue = type === "checkbox" ? checked : value;
+    setNewCarData((prevData) => ({
+      ...prevData,
+      [name]: newValue,
+    }));
+  };
   const dispatch = useDispatch();
   const { myInventory, inventory } = useSelector(
     (store) => store.inventoryManager
   );
 
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const newValue = type === "checkbox" ? checked : value;
-    setEditedData((prevData) => ({
-      ...prevData,
-      [name]: newValue,
-    }));
-  };
-
   const handleSubmit = () => {
-    dispatch(EditCar({ _id, inventory, myInventory, editedData }));
+    dispatch(addNewCar({ inventory, myInventory, newCarData }));
     onClose();
   };
 
@@ -44,14 +52,14 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit Car Information</ModalHeader>
+        <ModalHeader>Add New Car</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl>
             <FormLabel>Title</FormLabel>
             <Input
               name="title"
-              value={editedData.title}
+              value={newCarData.title}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -59,7 +67,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Accidents</FormLabel>
             <Input
               name="accidents"
-              value={editedData.accidents}
+              value={newCarData.accidents}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -68,7 +76,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Description</FormLabel>
             <Textarea
               name="description"
-              value={editedData.description}
+              value={newCarData.description}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -77,7 +85,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Image</FormLabel>
             <Input
               name="image"
-              value={editedData.image}
+              value={newCarData.image}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -86,7 +94,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Previous Buyers</FormLabel>
             <Input
               name="previous_buyers"
-              value={editedData.previous_buyers}
+              value={newCarData.previous_buyers}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -95,7 +103,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Odometer</FormLabel>
             <Input
               name="odometer"
-              value={editedData.odometer}
+              value={newCarData.odometer}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -103,7 +111,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Registration Place</FormLabel>
             <Input
               name="registration_place"
-              value={editedData.registration_place}
+              value={newCarData.registration_place}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -111,7 +119,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Major Scratch</FormLabel>
             <Switch
               name="major_scratch"
-              isChecked={editedData.major_scratch}
+              isChecked={newCarData.major_scratch}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -120,7 +128,7 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
             <FormLabel>Original Paint</FormLabel>
             <Switch
               name="original_paint"
-              isChecked={editedData.original_paint}
+              isChecked={newCarData.original_paint}
               onChange={handleInputChange}
             />
           </FormControl>
@@ -137,4 +145,4 @@ const EditFormModal = ({ isOpen, onClose, carData }) => {
   );
 };
 
-export default EditFormModal;
+export default AddCarModal;

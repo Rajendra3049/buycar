@@ -39,7 +39,7 @@ const LoginPage = () => {
       }
     } else {
       await dispatch(dealerSignup({ name, email, password }));
-      navigate("/login");
+      toggleForm();
     }
   };
   useEffect(() => {

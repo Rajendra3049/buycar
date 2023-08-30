@@ -29,12 +29,8 @@ const InventoryCard = ({ car }) => {
     setIsEditModalOpen(false);
   };
 
-  const handleEditClick = () => {
-    console.log(`Editing ${car.title}`);
-  };
-
   const { isAuth } = useSelector((store) => store.dealerManager);
-  const { myInventory, inventory, loading, msg } = useSelector(
+  const { myInventory, inventory, msg } = useSelector(
     (store) => store.inventoryManager
   );
   function handleDeleteClick() {
@@ -92,7 +88,9 @@ const InventoryCard = ({ car }) => {
         <Text>Accidents: {car.accidents}</Text>
         {isAuth && (
           <HStack justifyContent="space-between" w="100%">
-            <Button onClick={openEditModal}>Edit Car</Button>
+            <Button onClick={openEditModal} colorScheme="blue">
+              Edit Car
+            </Button>
             <EditFormModal
               isOpen={isEditModalOpen}
               onClose={closeEditModal}
