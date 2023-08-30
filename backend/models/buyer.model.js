@@ -4,8 +4,8 @@ const buyerSchema = mongoose.Schema({
   email: String,
   phone: Number,
   address: String,
-  carId: mongoose.Schema.Types.ObjectId,
-  dealerId: mongoose.Schema.Types.ObjectId,
+  car_Id: mongoose.Schema.Types.ObjectId,
+  dealer_Id: mongoose.Schema.Types.ObjectId,
 });
 
 const buyerModel = mongoose.model("Buyer", buyerSchema);

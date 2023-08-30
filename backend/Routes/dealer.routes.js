@@ -26,25 +26,25 @@ dealerRoutes.post("/login", async (req, res) => {
                   algorithm: "HS256",
                 }
               );
-              res
-                .status(200)
-                .send({
-                  msg: "login successful",
-                  token,
-                  name: dealerFound.name,
-                });
+              res.status(200).send({
+                msg: "login successful",
+                token,
+                name: dealerFound.name,
+              });
             } catch (error) {
               res
                 .status(500)
                 .send({ msg: "error while generating token", error });
             }
           } else {
+            console.log(err);
             res.status(400).send({ msg: "error while login" });
           }
         }
       );
     }
   } catch (error) {
+    console.log(error);
     res.status(400).send({ msg: "error while login", error: error });
   }
 });

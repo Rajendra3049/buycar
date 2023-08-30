@@ -9,7 +9,7 @@ async function userAuth(req, res, next) {
         return;
       }
 
-      req.body.dealerId = decoded.dealerId;
+      req.body.dealer_Id = decoded.dealerId;
 
       next();
     });

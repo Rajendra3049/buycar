@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const inventorySchema = mongoose.Schema({
-  dealerId: mongoose.Schema.Types.ObjectId,
+  dealer_Id: mongoose.Schema.Types.ObjectId,
   odometer: Number,
   major_scratch: Boolean,
   original_paint: Boolean,

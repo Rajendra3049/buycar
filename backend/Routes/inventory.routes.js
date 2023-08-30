@@ -14,11 +14,14 @@ inventoryRoutes.get("/inventory", async (req, res) => {
 });
 
 inventoryRoutes.get("/my-inventory", userAuth, async (req, res) => {
-  const dealerId = req.body.dealerId;
+  const dealerId = req.body.dealer_Id;
+
   try {
-    const cars = await inventoryModel.find({ dealerId });
-    res.status(200).send(cars);
+    const cars = await inventoryModel.find();
+
+    res.status(200).send({ cars, dealerId });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .send({ error: "An error occurred while fetching your cars" });
@@ -38,7 +41,7 @@ inventoryRoutes.post("/inventory", userAuth, async (req, res) => {
 
 inventoryRoutes.patch("/inventory/:id", userAuth, async (req, res) => {
   const _id = req.params.id;
-  const dealerId = req.body.dealerId;
+  const dealer_Id = req.body.dealer_Id;
 
   try {
     const car = await inventoryModel.findById(_id);
@@ -47,7 +50,7 @@ inventoryRoutes.patch("/inventory/:id", userAuth, async (req, res) => {
       return res.status(404).send({ error: "car not found" });
     }
 
-    if (car.dealerId.toString() !== dealerId) {
+    if (car.dealer_Id.toString() !== dealer_Id) {
       return res.status(403).send({ error: "Unauthorized to update this car" });
     }
 
@@ -67,7 +70,7 @@ inventoryRoutes.patch("/inventory/:id", userAuth, async (req, res) => {
 
 inventoryRoutes.delete("/inventory/:id", userAuth, async (req, res) => {
   const _id = req.params.id;
-  const dealerId = req.body.dealerId;
+  const dealer_Id = req.body.dealer_Id;
 
   try {
     const car = await inventoryModel.findById(_id);
@@ -76,7 +79,7 @@ inventoryRoutes.delete("/inventory/:id", userAuth, async (req, res) => {
       return res.status(404).send({ error: "car not found" });
     }
 
-    if (car.dealerId.toString() !== dealerId) {
+    if (car.dealer_Id.toString() !== dealer_Id) {
       return res.status(403).send({ error: "Unauthorized to delete this car" });
     }
 
@@ -88,7 +91,7 @@ inventoryRoutes.delete("/inventory/:id", userAuth, async (req, res) => {
 });
 
 inventoryRoutes.delete("/inventory", userAuth, async (req, res) => {
-  const { ids, dealerId } = req.body;
+  const { ids, dealer_Id } = req.body;
 
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
     return res
@@ -106,7 +109,7 @@ inventoryRoutes.delete("/inventory", userAuth, async (req, res) => {
     }
 
     const unauthorizedCars = cars.filter(
-      (car) => car.dealerId.toString() !== dealerId
+      (car) => car.dealer_Id.toString() !== dealer_Id
     );
     if (unauthorizedCars.length > 0) {
       return res
