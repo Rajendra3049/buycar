@@ -11,7 +11,6 @@ import { baseUrl } from "../api";
 export const dealerLogin =
   ({ email, password }) =>
   async (dispatch) => {
-    console.log(email, password);
     try {
       dispatch({ type: DEALER_LOADING });
 

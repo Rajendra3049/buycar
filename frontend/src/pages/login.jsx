@@ -35,7 +35,7 @@ const LoginPage = () => {
     if (isLogin) {
       await dispatch(dealerLogin({ email, password }));
       if (isAuth) {
-        navigate("/");
+        navigate("/my-inventory");
       }
     } else {
       await dispatch(dealerSignup({ name, email, password }));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -8,19 +8,51 @@ import {
   Button,
   VStack,
   HStack,
+  useToast,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCar } from "../redux/inventory/inventory.action";
+import EditFormModal from "./editForm";
 
 const InventoryCard = ({ car }) => {
+  const { _id } = car;
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
   const handleEditClick = () => {
     console.log(`Editing ${car.title}`);
   };
 
-  const handleDeleteClick = () => {
-    console.log(`Deleting ${car.title}`);
-  };
-
   const { isAuth } = useSelector((store) => store.dealerManager);
+  const { myInventory, inventory, loading, msg } = useSelector(
+    (store) => store.inventoryManager
+  );
+  function handleDeleteClick() {
+    dispatch(deleteCar({ _id, inventory, myInventory }));
+  }
+
+  useEffect(() => {
+    if (msg === "cars deleted successfully") {
+      toast({
+        title: "Success",
+        description: msg ? msg : "An error occurred",
+        status: "success",
+        duration: 2000,
+        position: "top-right",
+        isClosable: true,
+      });
+    }
+  }, [msg]);
 
   return (
     <Box
@@ -60,9 +92,12 @@ const InventoryCard = ({ car }) => {
         <Text>Accidents: {car.accidents}</Text>
         {isAuth && (
           <HStack justifyContent="space-between" w="100%">
-            <Button colorScheme="teal" onClick={handleEditClick}>
-              Edit
-            </Button>
+            <Button onClick={openEditModal}>Edit Car</Button>
+            <EditFormModal
+              isOpen={isEditModalOpen}
+              onClose={closeEditModal}
+              carData={car}
+            />
             <Button colorScheme="red" onClick={handleDeleteClick}>
               Delete
             </Button>

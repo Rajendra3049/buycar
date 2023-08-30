@@ -3,6 +3,7 @@ import {
   INVENTORY_LOADING,
   GET_INVENTORY,
   GET_MY_INVENTORY,
+  DELETE_MY_INVENTORY,
 } from "./inventory.action-type";
 
 const initialState = {
@@ -10,10 +11,10 @@ const initialState = {
   error: false,
   inventory: [],
   myInventory: [],
+  msg: null,
 };
 
 const inventoryReducer = (state = initialState, { type, payload }) => {
-  console.log({ type, payload });
   switch (type) {
     case INVENTORY_LOADING: {
       return {
@@ -42,6 +43,16 @@ const inventoryReducer = (state = initialState, { type, payload }) => {
         loading: false,
         error: true,
         myInventory: payload,
+      };
+    }
+    case DELETE_MY_INVENTORY: {
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        myInventory: payload.myInventory,
+        inventory: payload.inventory,
+        msg: payload.msg,
       };
     }
 

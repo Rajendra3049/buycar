@@ -4,11 +4,13 @@ import { getMyInventory } from "../redux/inventory/inventory.action";
 import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
 
 import InventoryCard from "../components/inventoryCard";
+import { useNavigate } from "react-router-dom";
 
 const MyInventory = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { myInventory } = useSelector((store) => store.inventoryManager);
-
+  const { isAuth } = useSelector((store) => store.dealerManager);
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getMyInventory());
@@ -16,6 +18,12 @@ const MyInventory = () => {
 
     fetchData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/");
+    }
+  }, [isAuth]);
   return (
     <Flex width="100%">
       <Box
